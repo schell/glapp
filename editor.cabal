@@ -56,10 +56,8 @@ executable editor
   -- Directories containing source files.
   hs-source-dirs:      src
 
-  ghc-options: -hide-package monads-tf
-
   -- Modules included in this executable, other than Main.
-  -- other-modules:
+  other-modules:       Data.App
 
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:
