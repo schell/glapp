@@ -1,5 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-module Data.App.Internal where
+module Data.Glapp.Internal where
 
 import Graphics.UI.GLFW
 import Graphics.Rendering.OpenGL
@@ -8,7 +8,7 @@ import Control.Monad.State
 import Control.Concurrent
 import Control.Lens
 import Data.Maybe
-import Data.App.Types
+import Data.Glapp.Types
 import qualified Data.Set as S
 
 

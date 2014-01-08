@@ -10,8 +10,7 @@ import Control.Lens
 import Data.Maybe
 import System.Exit
 import qualified Data.Set as S
-import Data.App
-import Debug.Trace
+import Data.Glapp
 
 
 data Editor = Editor { _editorWindowCount :: Int
@@ -62,7 +61,7 @@ myAppStep e ws = do
 
 myNewWindows :: Editor -> [NewWindow EditorWindow]
 myNewWindows (Editor 0 _) = [(UserWindowConfig (800,800) (100,100) "Editor0", myWindow)]
-myNewWindows (Editor i keys) = 
+myNewWindows (Editor i keys) =
     if S.fromList [Key'LeftSuper,Key'N] `S.isSubsetOf` keys
       then [(UserWindowConfig (800,800) (100,100) ("Editor" ++ show i), myWindow)]
       else []

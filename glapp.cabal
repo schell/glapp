@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 -- The name of the package.
-name:                editor
+name:                glapp
 
 -- The package version.  See the Haskell package versioning policy (PVP)
 -- for standards guiding when and how versions should be incremented.
@@ -13,10 +13,11 @@ name:                editor
 version:             0.1.0.0
 
 -- A short (one-line) description of the package.
-synopsis:            Text Editor
+synopsis:            An OpenGL micro framework.
 
 -- A longer description of the package.
--- description:
+description:         Attempts to make managing multiple windows and window data
+                     easier.
 
 -- URL for the project homepage or repository.
 homepage:            zyghost.com
@@ -37,7 +38,7 @@ maintainer:          efsubenovex@gmail.com
 -- A copyright notice.
 -- copyright:
 
-category:            Text
+category:            Graphics
 
 build-type:          Simple
 
@@ -49,7 +50,19 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 
-executable editor
+library
+  hs-source-dirs:      src
+  exposed-modules:     Data.Glapp
+  default-language:    Haskell2010
+  build-depends:       base         >=4.7       && <4.8,
+                       OpenGL       >=2.9.1.0   && <2.10,
+                       lens         >=4.0       && <4.1,
+                       GLFW-b       >=1.4.6     && <1.5,
+                       mtl          >=2.1.2     && <2.2,
+                       containers   >=0.5.3.1   && <0.6
+
+
+executable example
   -- .hs or .lhs file containing the Main module.
   main-is:             Main.hs
 
@@ -57,7 +70,7 @@ executable editor
   hs-source-dirs:      src
 
   -- Modules included in this executable, other than Main.
-  other-modules:       Data.App
+  -- other-modules:
 
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:
@@ -68,14 +81,8 @@ executable editor
   -- Other library packages from which modules are imported.
   build-depends:       base >=4.7 && <4.8,
                        OpenGL       >=2.9.1.0   && <2.10,
-                       OpenGLRaw    >=1.4.0.0   && <1.5,
-                       vector       >=0.10.9.1  && <0.11,
-                       JuicyPixels  >=3.1.2     && <3.2,
                        lens         >=4.0       && <4.1,
-                       bytestring   >=0.10.4.0  && <0.11,
-                       directory    >=1.2.0.2   && <1.3,
                        GLFW-b       >=1.4.6     && <1.5,
-                       time         >=1.4.1     && <1.5,
                        mtl          >=2.1.2     && <2.2,
                        containers   >=0.5.3.1   && <0.6
 

@@ -9,7 +9,7 @@ import Control.Lens
 import Data.Maybe
 import System.Exit
 import qualified Data.Set as S
-import Data.App
+import Data.Glapp
 import Example.Editor
 
 main :: IO ()

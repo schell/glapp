@@ -1,4 +1,4 @@
-module Data.App (
+module Data.Glapp (
     module T,
     iterateApp
 ) where
@@ -10,11 +10,9 @@ import           Control.Monad.State
 import           Control.Concurrent
 import           Control.Lens
 import           Data.Maybe
-import           System.Exit
-import           Data.App.Types as T
-import           Data.App.Internal
+import           Data.Glapp.Types as T
+import           Data.Glapp.Internal
 import qualified Data.Set as S
-import Debug.Trace
 
 
 
@@ -65,7 +63,7 @@ stepWindows app = do
 
 makeAppWindow :: Id -> NewWindow a -> IO (Maybe (AppWindow a))
 makeAppWindow id' (UserWindowConfig s p t, uWin) = do
-    mWin <- (uncurry createWindow) s t Nothing Nothing
+    mWin <- uncurry createWindow s t Nothing Nothing
     case mWin of
        Nothing  -> return Nothing
        Just win -> do
@@ -112,17 +110,16 @@ createWindows app = do
     -- Create the windows.
     appWins <- fmap catMaybes $ forM zipped (uncurry makeAppWindow)
 
-    return $ (flip execState) app $
-        when (length appWins > 0) $
-            do nextWindowId .= (succ $ last ids)
-               windows %= (S.union $ S.fromList appWins)
+    return $ flip execState app $
+        unless (null appWins) $ do
+            nextWindowId .= succ (last ids)
+            windows %= S.union (S.fromList appWins)
 
 
 destroyWindows :: App a b -> IO (App a b)
 destroyWindows app = do
     -- Run through all the windows and find which ones should
     -- close.
-    uWins <- getUserWindowIds app
     closedAppWins <- fmap catMaybes $ forM (S.toList $ app ^. windows) $
         \a@(AppWindow _ win _) -> do
             shouldClose <- windowShouldClose win
@@ -166,7 +163,7 @@ iterateApp u = do
                   , _nextWindowId = Id 0
                   }
 
-    stepApp app >>= iterateUntilM getUserAppShouldQuit stepApp
+    _ <- stepApp app >>= iterateUntilM getUserAppShouldQuit stepApp
     return ()
 
 

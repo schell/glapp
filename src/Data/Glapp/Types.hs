@@ -1,8 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
-module Data.App.Types where
+module Data.Glapp.Types where
 
 import Graphics.UI.GLFW
-import Graphics.Rendering.OpenGL
 import Control.Monad
 import Control.Monad.State
 import Control.Concurrent
@@ -13,7 +12,7 @@ import Data.Maybe
 data Id = Id { _unId :: Int } deriving (Show, Eq, Ord)
 
 instance Enum Id where
-    toEnum i = Id i
+    toEnum = Id
     fromEnum = _unId
 
 
